@@ -10,7 +10,7 @@ router = APIRouter(
     tags=["Posts"]
 )
 
-@router.get("/", response_model=list[schemas.PostOut])
+@router.get("", response_model=list[schemas.PostOut])
 def get_posts(db: Session = Depends(get_db), current_user: int = Depends(auth2.get_current_user), limit: int = 10, skip: int = 0, search: Optional[str] = ""):
     # cursor.execute("""SELECT * FROM posts""")
     # posts = cursor.fetchall()
@@ -22,7 +22,7 @@ def get_posts(db: Session = Depends(get_db), current_user: int = Depends(auth2.g
     return posts_with_votes
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)
+@router.post("", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)
 def create_post(post: schemas.PostCreate, db: Session = Depends(get_db), current_user: int = Depends(auth2.get_current_user)):
    # cursor.execute("""INSERT INTO posts (title, content, published) # VALUES (%s, %s, %s) RETURNING * """, (post.title, post.content, # post.published))
    # new_post = cursor.fetchone()
@@ -35,7 +35,7 @@ def create_post(post: schemas.PostCreate, db: Session = Depends(get_db), current
    return new_post
 
 
-@router.get("/{id}", response_model=schemas.PostOut)
+@router.get("{id}", response_model=schemas.PostOut)
 def get_post(id: int, db: Session = Depends(get_db), current_user: int = Depends(auth2.get_current_user)):
     # cursor.execute("""SELECT * FROM posts WHERE id = %s""", (str(id)))
     # post = cursor.fetchone()
@@ -47,7 +47,7 @@ def get_post(id: int, db: Session = Depends(get_db), current_user: int = Depends
     return post_with_votes
 
 
-@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_post(id: int, db: Session = Depends(get_db), current_user: int = Depends(auth2.get_current_user)):
     # cursor.execute("""DELETE FROM posts WHERE id = %s RETURNING *""", (str(id),))
     # deleted_post = cursor.fetchone()
@@ -66,7 +66,7 @@ def delete_post(id: int, db: Session = Depends(get_db), current_user: int = Depe
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-@router.put("/{id}", status_code=status.HTTP_202_ACCEPTED, response_model=schemas.Post)
+@router.put("{id}", status_code=status.HTTP_202_ACCEPTED, response_model=schemas.Post)
 def update_post(id: int, updated_post: schemas.PostCreate, db: Session = Depends(get_db), current_user: int = Depends(auth2.get_current_user)):
 
    # cursor.execute("""UPDATE posts SET title = %s, content = %s, published = %s WHERE id = %s RETURNING *""", (post.title, post.content, post.published, str(id)))
