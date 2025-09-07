@@ -32,6 +32,7 @@ class Post(PostBase):
 class PostOut(BaseModel):
     Post: Post
     votes: int
+    comments: int
 
     class Config:
         from_attributes = True
@@ -59,3 +60,19 @@ class TokenData(BaseModel):
 class Vote(BaseModel):
     post_id: int
     dir: conint(ge=0, le=1)
+
+class CommentBase(BaseModel):
+    id: int
+    user_id: int
+    post_id: int
+    content: str
+    created_at: datetime
+
+class CommentCreate(CommentBase):
+    pass
+
+class CommentOut(CommentBase):
+    pass
+
+    class Config:
+        from_attributes = True

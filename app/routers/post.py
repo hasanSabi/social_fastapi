@@ -17,9 +17,26 @@ def get_posts(db: Session = Depends(get_db), current_user: int = Depends(auth2.g
 
     # posts = db.query(models.Post).filter(models.Post.title.contains(search)).offset(skip).limit(limit).all()
 
-    posts_with_votes = db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(models.Vote, models.Vote.post_id == models.Post.id, isouter=True).group_by(models.Post.id).filter(models.Post.title.contains(search)).offset(skip).limit(limit).all()
+   # posts_with_votes = db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(models.Vote, models.Vote.post_id == models.Post.id, isouter=True).group_by(models.Post.id).filter(models.Post.title.contains(search)).offset(skip).limit(limit).all()
+
+    posts_with_counts = (
+    db.query(
+        models.Post,
+        func.count(models.Vote.post_id).label("votes"),
+        func.count(models.Comment.id).label("comments")
+    )
+    .outerjoin(models.Vote, models.Vote.post_id == models.Post.id)
+    .outerjoin(models.Comment, models.Comment.post_id == models.Post.id)
+    .group_by(models.Post.id)
+    .filter(models.Post.title.contains(search))
+    .offset(skip)
+    .limit(limit)
+    .all()
+)
+
+    
     #return [schemas.PostOut(Post=post, votes=votes) for post, votes in results]
-    return posts_with_votes
+    return posts_with_counts
 
 
 @router.post("", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)
@@ -35,16 +52,16 @@ def create_post(post: schemas.PostCreate, db: Session = Depends(get_db), current
    return new_post
 
 
-@router.get("{id}", response_model=schemas.PostOut)
+@router.get("/{id}", response_model=schemas.PostOut)
 def get_post(id: int, db: Session = Depends(get_db), current_user: int = Depends(auth2.get_current_user)):
     # cursor.execute("""SELECT * FROM posts WHERE id = %s""", (str(id)))
     # post = cursor.fetchone()
     # post = db.query(models.Post).filter(models.Post.id == id).first()
-    post_with_votes = db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(models.Vote, models.Vote.post_id == models.Post.id, isouter=True).group_by(models.Post.id).filter(models.Post.id == id).first()
+    post_with_counts = db.query(models.Post, func.count(models.Vote.post_id).label("votes"), func.count(models.Comment.id).label("comments")).join(models.Vote, models.Vote.post_id == models.Post.id, isouter=True).join(models.Comment, models.Comment.post_id == models.Post.id, isouter=True).group_by(models.Post.id).filter(models.Post.id == id).first()
 
-    if not post_with_votes:
+    if not post_with_counts:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"post with id: {id} was not found")
-    return post_with_votes
+    return post_with_counts
 
 
 @router.delete("{id}", status_code=status.HTTP_204_NO_CONTENT)
