@@ -62,17 +62,15 @@ class Vote(BaseModel):
     dir: conint(ge=0, le=1)
 
 class CommentBase(BaseModel):
-    id: int
-    user_id: int
     post_id: int
     content: str
-    created_at: datetime
 
 class CommentCreate(CommentBase):
     pass
 
 class CommentOut(CommentBase):
-    pass
-
+    id: int
+    user_id: int
+    created_at: datetime
     class Config:
         from_attributes = True
