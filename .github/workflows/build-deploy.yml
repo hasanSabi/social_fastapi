@@ -10,7 +10,14 @@ on:
 
 jobs:
   build:
+    environment: 
+      name: testing
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${ { secrets.DATABASE_URL } }
+      SECRET_KEY: ${ { secrets.SECRET_KEY } }
+      ALGORITHM: ${ { secrets.ALGORITHM } }
+      ACCESS_TOKEN_EXPIRES_MINUTES: ${ { secrets.ACCESS_TOKEN_EXPIRES_MINUTES } }
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python
