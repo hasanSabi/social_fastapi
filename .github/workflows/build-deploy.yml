@@ -64,5 +64,5 @@ jobs:
         run: curl -fsSL https://railway.app/install.sh | sh
 
       - name: Deploy to Railway
-        run: railway up --ci
+        run: railway up --ci --service social_fastapi
 
