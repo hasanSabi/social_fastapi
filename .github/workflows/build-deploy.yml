@@ -13,10 +13,10 @@ jobs:
     environment: 
       name: testing
     env:
-      DATABASE_URL: ${ { secrets.DATABASE_URL } }
-      SECRET_KEY: ${ { secrets.SECRET_KEY } }
-      ALGORITHM: ${ { secrets.ALGORITHM } }
-      ACCESS_TOKEN_EXPIRES_MINUTES: ${ { secrets.ACCESS_TOKEN_EXPIRES_MINUTES } }
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      ALGORITHM: ${{ secrets.ALGORITHM }}
+      ACCESS_TOKEN_EXPIRES_MINUTES: ${{ secrets.ACCESS_TOKEN_EXPIRES_MINUTES }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
