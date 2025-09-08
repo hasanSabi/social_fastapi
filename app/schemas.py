@@ -1,7 +1,6 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, conint, ConfigDict
 from datetime import datetime
 from typing import Optional, List
-from pydantic import conint
 
 class PostBase(BaseModel):
     title: str
@@ -17,8 +16,7 @@ class UserOut(BaseModel):
     email: EmailStr
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True) 
 
 class Post(PostBase):
     id: int
@@ -26,16 +24,14 @@ class Post(PostBase):
     owner_id: int
     owner: 'UserOut'
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True) 
 
 class PostOut(BaseModel):
     Post: Post
     votes: int
     comments: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True) 
 
 
 class UserCreate(BaseModel):
@@ -72,5 +68,5 @@ class CommentOut(CommentBase):
     id: int
     user_id: int
     created_at: datetime
-    class Config:
-        from_attributes = True
+    
+    model_config = ConfigDict(from_attributes=True)
