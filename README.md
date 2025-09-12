@@ -1,45 +1,49 @@
-Social FastAPI
+# Social FastAPI
 
-A production-ready FastAPI application with PostgreSQL database, tested via pytest and deployed automatically to Railway using GitHub Actions CI/CD.
+A production-ready **FastAPI** API with **PostgreSQL** database, tested via **pytest** and deployed automatically to **Railway** using GitHub Actions CI/CD.
 
-Features
-	FastAPI backend with async support
-	PostgreSQL as the database
-	JWT Authentication with refresh tokens
-	Automated testing with pytest + GitHub Actions
-	Continuous deployment to Railway
-	Ready for containerization with Docker & Kubernetes
+---
 
-Tech Stack
-	FastAPI
-	PostgreSQL
-	SQLAlchemy
- 	ORM
-	Alembic
- 		migrations
-	Pydantic
- 		for validation
-	Pytest
- 		for testing
-	Railway
- 		for deployment
+## Features
+- FastAPI backend with async support  
+- PostgreSQL as the database  
+- JWT Authentication with refresh tokens  
+- Automated testing with pytest + GitHub Actions  
+- Continuous deployment to Railway  
+- Ready for containerization with Docker & Kubernetes  
 
-⚙️ Setup & Installation
-1️⃣ Clone the repository
-	git clone https://github.com/your-username/social_fastapi.git
-	cd social_fastapi
+---
 
-2️⃣ Create a virtual environment
-	python -m venv venv
-	source venv/bin/activate   # On Linux/Mac
-	venv\Scripts\activate      # On Windows
+## Tech Stack
+- FastAPI  
+- PostgreSQL  
+- SQLAlchemy (ORM)  
+- Alembic (migrations)  
+- Pydantic (for validation)  
+- Pytest (for testing)  
+- Railway (for deployment)  
 
-3️⃣ Install dependencies
-	pip install -r requirements.txt
+---
 
-4️⃣ Setup environment variables
-	Create a .env file in the root directory:
-	DATABASE_URL=postgresql://<username>:<password>@localhost:5432/<dbname>
+## ⚙️ Setup & Installation
+
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/your-username/social_fastapi.git
+cd social_fastapi
+
+
+### 2️⃣ Create a virtual environment
+python -m venv venv
+source venv/bin/activate    -On Linux/Mac
+venv\Scripts\activate       -On Windows
+
+### 3️⃣ Install dependencies
+pip install -r requirements.txt
+
+### 4️⃣ Setup environment variables
+Create a .env file in the root directory:
+DATABASE_URL=postgresql://<username>:<password>@localhost:5432/<dbname>
 	SECRET_KEY=<your_secret_key>
 	ALGORITHM=HS256
 	ACCESS_TOKEN_EXPIRES_MINUTES=30
